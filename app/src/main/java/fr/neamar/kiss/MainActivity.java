@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
@@ -27,14 +28,12 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 
 import fr.neamar.kiss.adapter.RecordAdapter;
-import fr.neamar.kiss.forwarder.ForwarderManager;
 import fr.neamar.kiss.searcher.HistorySearcher;
 import fr.neamar.kiss.searcher.QueryInterface;
 import fr.neamar.kiss.searcher.QuerySearcher;
 import fr.neamar.kiss.searcher.Searcher;
 import fr.neamar.kiss.searcher.TagsSearcher;
 import fr.neamar.kiss.searcher.UntaggedSearcher;
-import fr.neamar.kiss.ui.AnimatedListView;
 import fr.neamar.kiss.ui.KeyboardScrollHider;
 import fr.neamar.kiss.ui.ListPopup;
 import fr.neamar.kiss.ui.SearchEditText;
@@ -71,7 +70,7 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
     /**
      * Main list view
      */
-    public AnimatedListView list;
+    public ListView list;
     public View listContainer;
     /**
      * View to display when list is empty
