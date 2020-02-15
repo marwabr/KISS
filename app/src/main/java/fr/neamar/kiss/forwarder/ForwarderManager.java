@@ -47,7 +47,6 @@ public class ForwarderManager extends Forwarder {
     }
 
     public void onStart() {
-        widgetForwarder.onStart();
     }
 
     public void onResume() {

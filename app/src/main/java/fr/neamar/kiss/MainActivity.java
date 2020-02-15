@@ -140,7 +140,6 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
 
     private PopupWindow mPopup;
 
-    private ForwarderManager forwarderManager;
 
     /**
      * Called when the activity is first created.
@@ -157,11 +156,6 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
          */
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        /*
-         * Initialize all forwarders
-         */
-        forwarderManager = new ForwarderManager(this);
 
         /*
          * Set the view and store all useful components
@@ -207,11 +201,6 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
 
         this.listContainer.setVisibility(View.VISIBLE);
         systemUiVisibilityHelper = new SystemUiVisibilityHelper(this);
-
-        /*
-         * Defer everything else to the forwarders
-         */
-        forwarderManager.onCreate();
     }
 
     @Override
@@ -219,7 +208,6 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        forwarderManager.onCreateContextMenu(menu, v, menuInfo);
     }
 
     @Override
@@ -230,7 +218,6 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
     @Override
     protected void onStart() {
         super.onStart();
-        forwarderManager.onStart();
     }
 
     /**
@@ -267,7 +254,6 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
             displayKissBar(false);
         }
 
-        forwarderManager.onResume();
 
         super.onResume();
     }
@@ -276,13 +262,11 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
     @Override
     protected void onPause() {
         super.onPause();
-        forwarderManager.onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        forwarderManager.onStop();
     }
 
     @Override
@@ -313,12 +297,10 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        forwarderManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        forwarderManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /**
@@ -350,7 +332,6 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
     }
 
     public void onFavoriteChange() {
-        forwarderManager.onFavoriteChange();
         launchOccurred();
     }
 
@@ -373,7 +354,6 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
      * @param query the query on which to search
      */
     private void updateSearchRecords(String query) {
-        forwarderManager.updateSearchRecords(query);
 
         runTask(new QuerySearcher(this, query));
 
