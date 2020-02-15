@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.DragEvent;
@@ -26,8 +25,6 @@ import fr.neamar.kiss.KissApplication;
 import fr.neamar.kiss.MainActivity;
 import fr.neamar.kiss.R;
 import fr.neamar.kiss.UIColors;
-import fr.neamar.kiss.db.DBHelper;
-import fr.neamar.kiss.notification.NotificationListener;
 import fr.neamar.kiss.pojo.AppPojo;
 import fr.neamar.kiss.pojo.Pojo;
 import fr.neamar.kiss.result.Result;
@@ -79,28 +76,6 @@ public class Favorites extends Forwarder implements View.OnClickListener, View.O
     }
 
     void onCreate() {
-        if (isExternalFavoriteBarEnabled()) {
-            mainActivity.favoritesBar = mainActivity.findViewById(R.id.externalFavoriteBar);
-            // Hide the embedded bar
-            mainActivity.findViewById(R.id.embeddedFavoritesBar).setVisibility(View.INVISIBLE);
-        } else {
-            mainActivity.favoritesBar = mainActivity.findViewById(R.id.embeddedFavoritesBar);
-            // Hide the external bar
-            mainActivity.findViewById(R.id.externalFavoriteBar).setVisibility(View.GONE);
-        }
-
-        if (prefs.getBoolean("first-run-favorites", true)) {
-            // It is the first run. Make sure this is not an update by checking if history is empty
-            if (DBHelper.getHistoryLength(mainActivity) == 0) {
-                addDefaultAppsToFavs();
-            }
-            // set flag to false
-            prefs.edit().putBoolean("first-run-favorites", false).apply();
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            notificationPrefs = mainActivity.getSharedPreferences(NotificationListener.NOTIFICATION_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        }
 
     }
 

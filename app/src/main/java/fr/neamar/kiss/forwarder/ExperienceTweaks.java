@@ -15,7 +15,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import fr.neamar.kiss.MainActivity;
-import fr.neamar.kiss.R;
 import fr.neamar.kiss.searcher.HistorySearcher;
 import fr.neamar.kiss.searcher.NullSearcher;
 
@@ -105,7 +104,6 @@ class ExperienceTweaks extends Forwarder {
     }
 
     void onCreate() {
-        mainEmptyView = mainActivity.findViewById(R.id.main_empty);
     }
 
     void onResume() {

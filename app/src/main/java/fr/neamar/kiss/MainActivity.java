@@ -163,7 +163,6 @@ public class MainActivity extends Activity implements QueryInterface, KeyboardSc
         this.list = this.findViewById(android.R.id.list);
         this.listContainer = (View) this.list.getParent();
         this.emptyListView = this.findViewById(android.R.id.empty);
-        this.kissBar = findViewById(R.id.mainKissbar);
         this.rightHandSideButtonsWrapper = findViewById(R.id.rightHandSideButtonsWrapper);
         this.menuButton = findViewById(R.id.menuButton);
         this.searchEditText = findViewById(R.id.searchEditText);

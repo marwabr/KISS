@@ -50,7 +50,6 @@ class Widget extends Forwarder {
 
         mAppWidgetManager = AppWidgetManager.getInstance(mainActivity);
         mAppWidgetHost = new AppWidgetHost(mainActivity, APPWIDGET_HOST_ID);
-        widgetArea = mainActivity.findViewById(R.id.widgetLayout);
 
         restoreWidgets();
     }

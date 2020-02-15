@@ -99,42 +99,7 @@ class InterfaceTweaks extends Forwarder {
     }
 
     private void applyRoundedCorners(MainActivity mainActivity) {
-        if (prefs.getBoolean("pref-rounded-bars", true)) {
-            mainActivity.kissBar.setBackgroundResource(R.drawable.rounded_kiss_bar);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mainActivity.findViewById(R.id.externalFavoriteBar).setBackgroundResource(R.drawable.rounded_search_bar);
-                mainActivity.findViewById(R.id.searchEditLayout).setBackgroundResource(R.drawable.rounded_search_bar);
-            } else {
-                // Before API21, you can't access values from current theme using ?attr/
-                // So we made two different drawables (#931).
-                if (getSearchBackgroundColor() == Color.WHITE) {
-                    mainActivity.findViewById(R.id.externalFavoriteBar).setBackgroundResource(R.drawable.rounded_search_bar_pre21_light);
-                    mainActivity.findViewById(R.id.searchEditLayout).setBackgroundResource(R.drawable.rounded_search_bar_pre21_light);
-                } else {
-                    mainActivity.findViewById(R.id.externalFavoriteBar).setBackgroundResource(R.drawable.rounded_search_bar_pre21_dark);
-                    mainActivity.findViewById(R.id.searchEditLayout).setBackgroundResource(R.drawable.rounded_search_bar_pre21_dark);
-                }
-            }
-        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            // Tinting is not properly applied pre lollipop if there is no solid background, so we need to manually set the background color
-            mainActivity.kissBar.setBackgroundColor(UIColors.getPrimaryColor(mainActivity));
-        }
 
-        if (prefs.getBoolean("pref-rounded-list", false)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mainActivity.findViewById(R.id.resultLayout).setBackgroundResource(R.drawable.rounded_result_layout);
-                // clip list content to rounded corners
-                mainActivity.listContainer.setClipToOutline(true);
-            } else {
-                // Before API21, you can't access values from current theme using ?attr/
-                // So we made two different drawables (#931).
-                if (getSearchBackgroundColor() == Color.WHITE) {
-                    mainActivity.findViewById(R.id.resultLayout).setBackgroundResource(R.drawable.rounded_result_layout_pre21_light);
-                } else {
-                    mainActivity.findViewById(R.id.resultLayout).setBackgroundResource(R.drawable.rounded_result_layout_pre21_dark);
-                }
-            }
-        }
     }
 
     private void swapKissButtonWithMenu(MainActivity mainActivity) {
