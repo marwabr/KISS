@@ -48,6 +48,5 @@ public class ApplicationsSearcher extends Searcher {
     protected void onPostExecute(Void param) {
         super.onPostExecute(param);
         // Build sections for fast scrolling
-        activityWeakReference.get().adapter.buildSections();
     }
 }

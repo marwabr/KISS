@@ -2,19 +2,15 @@ package fr.neamar.kiss.adapter;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.SectionIndexer;
 
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import fr.neamar.kiss.KissApplication;
 import fr.neamar.kiss.normalizer.StringNormalizer;
@@ -29,7 +25,7 @@ import fr.neamar.kiss.searcher.QueryInterface;
 import fr.neamar.kiss.ui.ListPopup;
 import fr.neamar.kiss.utils.FuzzyScore;
 
-public class RecordAdapter extends BaseAdapter implements SectionIndexer {
+public class RecordAdapter extends BaseAdapter {
     private final QueryInterface parent;
     private FuzzyScore fuzzyScore;
 
@@ -158,72 +154,5 @@ public class RecordAdapter extends BaseAdapter implements SectionIndexer {
     public void clear() {
         this.results.clear();
         notifyDataSetChanged();
-    }
-
-    /**
-     * When using fast scroll, generate a mapping to know where a given letter starts in the list
-     * (can only be used with a sorted result set!)
-     */
-    public void buildSections() {
-        alphaIndexer.clear();
-        int size = results.size();
-
-        // Generate the mapping letter => number
-        for (int x = 0; x < size; x++) {
-            String s = results.get(x).getSection();
-
-            // Put the first one
-            if (!alphaIndexer.containsKey(s)) {
-                alphaIndexer.put(s, x);
-            }
-        }
-
-        // Generate section list
-        List<Map.Entry<String, Integer>> entries = new ArrayList<>(alphaIndexer.entrySet());
-        Collections.sort(entries, (o1, o2) -> {
-            if (o2.getValue().equals(o1.getValue())) {
-                return 0;
-            }
-            // We're displaying from A to Z, everything needs to be reversed
-            return o2.getValue() > o1.getValue() ? -1 : 1;
-        });
-        sections = new String[entries.size()];
-        for (int i = 0; i < entries.size(); i++) {
-            sections[i] = entries.get(i).getKey();
-        }
-    }
-
-    @Override
-    public Object[] getSections() {
-        return sections;
-    }
-
-    @Override
-    public int getPositionForSection(int sectionIndex) {
-        if (sections.length == 0) {
-            return 0;
-        }
-
-        // In some rare situations, the system will ask for a section
-        // that does not exist anymore.
-        // It's likely there is a threading issue in our code somewhere,
-        // But I was unable to find where, so the following line is a quick and dirty fix.
-        sectionIndex = Math.max(0, Math.min(sections.length - 1, sectionIndex));
-        return alphaIndexer.get(sections[sectionIndex]);
-    }
-
-    @Override
-    public int getSectionForPosition(int position) {
-        for (int i = 0; i < sections.length; i++) {
-            if (alphaIndexer.get(sections[i]) > position) {
-                return i - 1;
-            }
-        }
-
-        // If apps starting with the letter "A" cover more than a full screen,
-        // we will never get > position
-        // so we just return the before-last section
-        // See #1005
-        return sections.length - 2;
     }
 }
